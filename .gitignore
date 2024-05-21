@@ -4,3 +4,7 @@ API/obj/
 .vscode/
 API/ShoppingApp.db-wal
 API/ShoppingApp.db-shm
+Core/bin/
+Core/obj/
+Infrastructure/bin/
+Infrastructure/obj/
