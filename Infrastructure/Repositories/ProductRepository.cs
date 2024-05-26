@@ -19,7 +19,9 @@ namespace Infrastructure.Repositories
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await Context.Products.FindAsync(id);
+            Product product = await Context.Products.FindAsync(id);
+
+            return product;
         }
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
