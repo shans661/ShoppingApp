@@ -24,14 +24,20 @@ namespace Infrastructure.Repositories
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            Product product = await Context.Products.FindAsync(id);
+            Product product = await Context.Products
+            .Include(x => x.ProductBrand)
+            .Include(x => x.ProductType)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
             return product;
         }
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
-            return await Context.Products.ToListAsync();
+            return await Context.Products
+            .Include(x => x.ProductBrand)
+            .Include(x => x.ProductType)
+            .ToListAsync();
         }
 
         public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
