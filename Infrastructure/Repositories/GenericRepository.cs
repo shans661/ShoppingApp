@@ -4,19 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Data;
 
 namespace Infrastructure.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        public Task<T> GetByIdAsync(int id)
+        private readonly StoreContext Context;
+        public GenericRepository(StoreContext context)
         {
-            throw new NotImplementedException();
+            Context = context;
+        }
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await Context.Set<T>().FindAsync(id); 
         }
 
-        public Task<IReadOnlyList<T>> ListAllAsync()
+        public async Task<IReadOnlyList<T>> ListAllAsync()
         {
-            throw new NotImplementedException();
+            return await Context.Set<T>().Tolistasync();
         }
     }
 }
