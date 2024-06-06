@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Core.Specifications;
+using API.Dtos;
 
 namespace API.Controllers
 {
@@ -17,19 +18,35 @@ namespace API.Controllers
             this.ProductRepo = productRepo;
         }
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetProducts()
         {
             ProductsWithTypesAndBrandsSpecification spec = new ProductsWithTypesAndBrandsSpecification();
             var products = await this.ProductRepo.ListAsync(spec);
-            return Ok(products);
+            return products.Select(x => new ProductDTO(){
+                Id = x.Id,
+                Description = x.Description,
+                Name = x.Name,
+                PictureUrl = x.PictureUrl,
+                Price = x.Price,
+                ProductBrand = x.ProductBrand.Name,
+                ProductType = x.ProductType.Name
+            }).ToList();
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProducts(int id)
+        public async Task<ActionResult<ProductDTO>> GetProducts(int id)
         {
             ProductsWithTypesAndBrandsSpecification spec = new ProductsWithTypesAndBrandsSpecification(id);
             var product = await this.ProductRepo.GetEntityWithSpec(spec);
 
-            return Ok(product);
+            return new ProductDTO(){
+                Id = product.Id,
+                Description = product.Description,
+                Name = product.Name,
+                PictureUrl = product.PictureUrl,
+                Price = product.Price,
+                ProductBrand = product.ProductBrand.Name,
+                ProductType = product.ProductType.Name
+            } ;
         }
 
         [HttpGet("brands")]
