@@ -31,15 +31,7 @@ namespace API.Controllers
         {
             ProductsWithTypesAndBrandsSpecification spec = new ProductsWithTypesAndBrandsSpecification();
             var products = await this.ProductRepo.ListAsync(spec);
-            return products.Select(x => new ProductDTO(){
-                Id = x.Id,
-                Description = x.Description,
-                Name = x.Name,
-                PictureUrl = x.PictureUrl,
-                Price = x.Price,
-                ProductBrand = x.ProductBrand.Name,
-                ProductType = x.ProductType.Name
-            }).ToList();
+            return Ok(Mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products));
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDTO>> GetProducts(int id)
