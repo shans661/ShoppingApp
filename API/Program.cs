@@ -2,6 +2,7 @@ using Infrastructure.Data;
 using Core.Interfaces;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
