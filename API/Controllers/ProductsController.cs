@@ -6,6 +6,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using API.Dtos;
 using AutoMapper;
+using API.Errors;
 
 namespace API.Controllers
 {
@@ -32,11 +33,14 @@ namespace API.Controllers
             return Ok(Mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products));
         }
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductDTO>> GetProducts(int id)
         {
             ProductsWithTypesAndBrandsSpecification spec = new ProductsWithTypesAndBrandsSpecification(id);
             var product = await this.ProductRepo.GetEntityWithSpec(spec);
 
+            if(product == null) return NotFound(new ApiResponse(404));
             return Mapper.Map<Product, ProductDTO>(product);
         }
 
