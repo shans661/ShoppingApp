@@ -43,5 +43,12 @@ namespace Core.Specifications
         {
             OrderBy = orderByDescExpression;
         }
+
+        protected void ApplyPaging(int skip, int take)
+        {
+            Skip = skip;
+            Take = take;
+            IsPagingEnabled = true;
+        }
     }
 }
