@@ -17,6 +17,12 @@ namespace Infrastructure.Repositories
         {
             Context = context;
         }
+
+        public async Task<int> CountAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
+        }
+
         public async Task<T> GetByIdAsync(int id)
         {
             return await Context.Set<T>().FindAsync(id); 
