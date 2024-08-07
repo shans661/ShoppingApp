@@ -38,6 +38,12 @@ namespace API.Extensions
                     return new BadRequestObjectResult(errorResponse);
                 };
             });
+
+            services.AddCors(x => {
+                x.AddPolicy("CorsPolicy", y => {
+                    y.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
+            });
             return services;
         }
     }
