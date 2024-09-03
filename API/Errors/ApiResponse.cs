@@ -19,7 +19,7 @@ namespace API.Errors
                 400 => "A bad request you have made",
                 401 => "You are not authorized",
                 404 => "Resource not found",
-                500 => "Roor occurred in the server side!!!",
+                500 => "Error occurred in the server side!!!",
                 _ => null
             };
         }
